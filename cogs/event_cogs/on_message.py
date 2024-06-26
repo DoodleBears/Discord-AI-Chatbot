@@ -77,7 +77,6 @@ class OnMessage(commands.Cog):
         return await generate_response(instructions=instructions, history=history)
 
     async def send_response(self, message: discord.Message, response):
-        bytes_obj = await text_to_speech(response)
         author_voice_channel = None
         author_member = None
         if message.guild:
@@ -86,6 +85,7 @@ class OnMessage(commands.Cog):
             author_voice_channel = author_member.voice.channel
 
         if author_voice_channel:
+            bytes_obj = await text_to_speech(response)
             voice_channel = await author_voice_channel.connect()
             voice_channel.play(
                 discord.FFmpegPCMAudio(executable="ffmpeg", source=bytes_obj)
