@@ -6,15 +6,45 @@ from ..common import current_language
 
 
 class NekoCog(commands.Cog):
-    def __init__(self, bot):
+    def __init__(self, bot: commands.Bot):
         self.bot = bot
 
     @commands.hybrid_command(name="gif", description=current_language["nekos"])
-    @discord.app_commands.choices(category=[
-        discord.app_commands.Choice(name=category.capitalize(), value=category)
-        for category in ['baka', 'bite', 'blush', 'bored', 'cry', 'cuddle', 'dance', 'facepalm', 'feed', 'handhold', 'happy', 'highfive', 'hug', 'kick', 'kiss', 'laugh', 'nod', 'nom', 'nope', 'pat', 'poke', 'pout', 'punch', 'shoot', 'shrug']
-    ])
-    async def gif(self, ctx, category: discord.app_commands.Choice[str]):
+    @discord.app_commands.choices(
+        category=[
+            discord.app_commands.Choice(name=category.capitalize(), value=category)
+            for category in [
+                "baka",
+                "bite",
+                "blush",
+                "bored",
+                "cry",
+                "cuddle",
+                "dance",
+                "facepalm",
+                "feed",
+                "handhold",
+                "happy",
+                "highfive",
+                "hug",
+                "kick",
+                "kiss",
+                "laugh",
+                "nod",
+                "nom",
+                "nope",
+                "pat",
+                "poke",
+                "pout",
+                "punch",
+                "shoot",
+                "shrug",
+            ]
+        ]
+    )
+    async def gif(
+        self, ctx: commands.Context, category: discord.app_commands.Choice[str]
+    ):
         base_url = "https://nekos.best/api/v2/"
 
         url = base_url + category.value
@@ -39,5 +69,5 @@ class NekoCog(commands.Cog):
                 await ctx.send(embed=embed)
 
 
-async def setup(bot):
+async def setup(bot: commands.Bot):
     await bot.add_cog(NekoCog(bot))
